@@ -1,4 +1,4 @@
-package com.example.TacosWebApp;
+package com.example.TacosWebApp.converters;
 
 import com.example.TacosWebApp.entities.Ingredient;
 import com.example.TacosWebApp.entities.Ingredient.Type;
