@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class TacoOrder {
-    private String deliveryname;
+    private String deliveryName;
     private String deliveryStreet;
     private String deliveryCity;
     private String deliveryState;
