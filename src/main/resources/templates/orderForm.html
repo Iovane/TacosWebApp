@@ -17,6 +17,10 @@
             <div class="col-md-6">
                 <label for="deliveryName" class="form-label">Name:</label>
                 <input type="text" class="form-control" id="deliveryName" th:field="*{deliveryName}">
+                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('deliveryName')}">
+                    <strong>Error:</strong>
+                    <span th:each="error : ${#fields.errors('deliveryName')}" th:text="${error}">Name Error</span>
+                </div>
             </div>
         </div>
 
@@ -24,6 +28,10 @@
             <div class="col-md-6">
                 <label for="deliveryStreet" class="form-label">Street:</label>
                 <input type="text" class="form-control" id="deliveryStreet" th:field="*{deliveryStreet}">
+                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('deliveryStreet')}">
+                    <strong>Error:</strong>
+                    <span th:each="error : ${#fields.errors('deliveryStreet')}" th:text="${error}">Street Error</span>
+                </div>
             </div>
         </div>
 
@@ -31,14 +39,26 @@
             <div class="col">
                 <label for="deliveryCity" class="form-label">City:</label>
                 <input type="text" class="form-control" id="deliveryCity" th:field="*{deliveryCity}">
+                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('deliveryCity')}">
+                    <strong>Error:</strong>
+                    <span th:each="error : ${#fields.errors('deliveryCity')}" th:text="${error}">City Error</span>
+                </div>
             </div>
             <div class="col">
                 <label for="deliveryState" class="form-label">State:</label>
                 <input type="text" class="form-control" id="deliveryState" th:field="*{deliveryState}">
+                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('deliveryState')}">
+                    <strong>Error:</strong>
+                    <span th:each="error : ${#fields.errors('deliveryState')}" th:text="${error}">State Error</span>
+                </div>
             </div>
             <div class="col">
                 <label for="deliveryZip" class="form-label">Zip code:</label>
                 <input type="text" class="form-control" id="deliveryZip" th:field="*{deliveryZip}">
+                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('deliveryZip')}">
+                    <strong>Error:</strong>
+                    <span th:each="error : ${#fields.errors('deliveryZip')}" th:text="${error}">Zip Error</span>
+                </div>
             </div>
         </div>
 
@@ -47,6 +67,10 @@
             <div class="col-md-6">
                 <label for="ccNumber" class="form-label">Card Number:</label>
                 <input type="text" class="form-control" id="ccNumber" th:field="*{ccNumber}" maxlength="50">
+                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('ccNumber')}">
+                    <strong>Error:</strong>
+                    <span th:each="error : ${#fields.errors('ccNumber')}" th:text="${error}">CC Num Error</span>
+                </div>
             </div>
         </div>
 
@@ -54,10 +78,18 @@
             <div class="col">
                 <label for="ccExpiration" class="form-label">Expiration:</label>
                 <input type="text" class="form-control" id="ccExpiration" th:field="*{ccExpiration}">
+                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('ccExpiration')}">
+                    <strong>Error:</strong>
+                    <span th:each="error : ${#fields.errors('ccExpiration')}" th:text="${error}">CC Exp Error</span>
+                </div>
             </div>
             <div class="col">
                 <label for="ccCVV" class="form-label">CVV:</label>
                 <input type="text" class="form-control" id="ccCVV" th:field="*{ccCVV}">
+                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('ccCVV')}">
+                    <strong>Error:</strong>
+                    <span th:each="error : ${#fields.errors('ccCVV')}" th:text="${error}">CC CVV Error</span>
+                </div>
             </div>
         </div>
 
