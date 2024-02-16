@@ -1,5 +1,6 @@
 package com.example.TacosWebApp.controllers;
 
+import com.example.TacosWebApp.data.IngredientRepository;
 import com.example.TacosWebApp.entities.Ingredient;
 import com.example.TacosWebApp.entities.Ingredient.Type;
 import com.example.TacosWebApp.entities.Taco;
@@ -21,32 +22,49 @@ import java.util.stream.Collectors;
 @SessionAttributes("tacoOrder")
 public class DesignTacoController {
 
+    private final IngredientRepository ingredientRepo;
+
+    public DesignTacoController(IngredientRepository ingredientRepo) {
+        this.ingredientRepo = ingredientRepo;
+    }
+
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
-                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
-                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
-                new Ingredient("CARN", "Carnitas", Type.PROTEIN),
-                new Ingredient("DITM", "Diced Tomatoes", Type.VEGGIES),
-                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
-                new Ingredient("CHED", "Cheddar", Type.CHEESE),
-                new Ingredient("MOJA", "Monterrey Jack", Type.CHEESE),
-                new Ingredient("SLSA", "Salsa", Type.SAUCE),
-                new Ingredient("SRCR", "Sour Cream", Type.SAUCE),
-                new Ingredient("RNCH", "Ranch", Type.SAUCE),
-                new Ingredient("LEMO", "Lemon", Type.CITRON),
-                new Ingredient("LIME", "Lime", Type.CITRON),
-                new Ingredient("ORNG", "Orange", Type.CITRON)
-        );
-
+        Iterable<Ingredient> ingredients = ingredientRepo.findAll();
         Type[] types = Ingredient.Type.values();
-        for (Type type: types) {
-            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
+        for (Type type : types) {
+            model.addAttribute(type.toString().toLowerCase(),
+                    filterByType((List<Ingredient>) ingredients, type));
         }
     }
 
+    @ModelAttribute
+//    public void addIngredientsToModel(Model model) {
+//        List<Ingredient> ingredients = Arrays.asList(
+//                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
+//                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
+//                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
+//                new Ingredient("CARN", "Carnitas", Type.PROTEIN),
+//                new Ingredient("DITM", "Diced Tomatoes", Type.VEGGIES),
+//                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
+//                new Ingredient("CHED", "Cheddar", Type.CHEESE),
+//                new Ingredient("MOJA", "Monterrey Jack", Type.CHEESE),
+//                new Ingredient("SLSA", "Salsa", Type.SAUCE),
+//                new Ingredient("SRCR", "Sour Cream", Type.SAUCE),
+//                new Ingredient("RNCH", "Ranch", Type.SAUCE),
+//                new Ingredient("LEMO", "Lemon", Type.CITRON),
+//                new Ingredient("LIME", "Lime", Type.CITRON),
+//                new Ingredient("ORNG", "Orange", Type.CITRON)
+//        );
+//
+//        Type[] types = Ingredient.Type.values();
+//        for (Type type: types) {
+//            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
+//        }
+//    }
+
     @GetMapping
+
     public String showDesignForm(Model model) {
         model.addAttribute("taco", new Taco());
         return "design";
