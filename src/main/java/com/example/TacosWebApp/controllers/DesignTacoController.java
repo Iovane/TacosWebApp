@@ -1,9 +1,11 @@
 package com.example.TacosWebApp.controllers;
 
 import com.example.TacosWebApp.data.IngredientRepository;
+import com.example.TacosWebApp.data.TacoRepository;
 import com.example.TacosWebApp.entities.Ingredient;
 import com.example.TacosWebApp.entities.Ingredient.Type;
 import com.example.TacosWebApp.entities.Taco;
+import com.example.TacosWebApp.entities.TacoOrder;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
@@ -23,10 +25,18 @@ import java.util.stream.Collectors;
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepo;
+    private final TacoRepository tacoRepo;
 
-    public DesignTacoController(IngredientRepository ingredientRepo) {
+    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo) {
         this.ingredientRepo = ingredientRepo;
+        this.tacoRepo = tacoRepo;
     }
+
+    @ModelAttribute(name = "tacoOrder")
+    public TacoOrder tacoOrder(){
+        return new TacoOrder();
+    }
+
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
@@ -38,43 +48,20 @@ public class DesignTacoController {
         }
     }
 
-//    @ModelAttribute
-//    public void addIngredientsToModel(Model model) {
-//        List<Ingredient> ingredients = Arrays.asList(
-//                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
-//                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
-//                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
-//                new Ingredient("CARN", "Carnitas", Type.PROTEIN),
-//                new Ingredient("DITM", "Diced Tomatoes", Type.VEGGIES),
-//                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
-//                new Ingredient("CHED", "Cheddar", Type.CHEESE),
-//                new Ingredient("MOJA", "Monterrey Jack", Type.CHEESE),
-//                new Ingredient("SLSA", "Salsa", Type.SAUCE),
-//                new Ingredient("SRCR", "Sour Cream", Type.SAUCE),
-//                new Ingredient("RNCH", "Ranch", Type.SAUCE),
-//                new Ingredient("LEMO", "Lemon", Type.CITRON),
-//                new Ingredient("LIME", "Lime", Type.CITRON),
-//                new Ingredient("ORNG", "Orange", Type.CITRON)
-//        );
-//
-//        Type[] types = Ingredient.Type.values();
-//        for (Type type: types) {
-//            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
-//        }
-//    }
-
     @GetMapping
-
     public String showDesignForm(Model model) {
         model.addAttribute("taco", new Taco());
         return "design";
     }
 
     @PostMapping
-    public String processTaco(@Valid @ModelAttribute("taco") Taco taco, Errors errors){
+    public String processTaco(@Valid @ModelAttribute("taco") Taco taco, Errors errors, TacoOrder tacoOrder){
         if(errors.hasErrors()){
             return "design";
         }
+
+        Taco saved = tacoRepo.save(taco);
+        tacoOrder.addTaco(saved);
 
         log.info("Processing taco: " + taco);
 
