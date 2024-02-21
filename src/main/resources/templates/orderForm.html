@@ -12,6 +12,11 @@
         <h1>Order your taco creations!</h1>
         <img src="/tacos.jpeg" class="img-fluid" alt="Taco Cloud Logo">
 
+        <h3>Your tacos in this order:</h3>
+        <ul>
+            <li th:each="taco : ${tacoOrder.tacos}"><span th:text="${taco.name}">taco name</span></li>
+        </ul>
+
         <h3>Deliver my taco masterpieces to...</h3>
         <div class="row mb-3">
             <div class="col-md-6">

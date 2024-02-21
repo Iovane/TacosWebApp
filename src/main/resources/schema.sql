@@ -27,5 +27,20 @@ create table if not exists Ingredient (
     );
 
 alter table Taco add foreign key (taco_order) references Taco_Order(id);
-
 ALTER TABLE Ingredient ADD UNIQUE (id);
+
+create table if not exists Taco_Ingredients (
+    taco bigint not null,
+    ingredient varchar(4) not null
+);
+
+alter table Taco_Ingredients add foreign key (taco) references Taco(id);
+alter table Taco_Ingredients add foreign key (ingredient) references Ingredient(id);
+
+create table if not exists Taco_Order_Tacos (
+    tacoOrder bigint not null,
+    taco bigint not null
+);
+
+alter table Taco_Order_Tacos add foreign key (tacoOrder) references Taco_Order(id);
+alter table Taco_Order_Tacos add foreign key (taco) references Taco(id);
