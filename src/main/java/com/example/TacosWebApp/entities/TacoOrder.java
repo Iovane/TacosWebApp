@@ -96,7 +96,7 @@ public class TacoOrder implements Serializable {
     @Digits(integer=3, fraction=0, message="Invalid CVV")
     private String ccCVV;
 
-    @ManyToMany(targetEntity=Taco.class)
+    @OneToMany(targetEntity=Taco.class)
     private List<Taco> tacos = new ArrayList<>();
 
     public void addDesign(Taco design) {

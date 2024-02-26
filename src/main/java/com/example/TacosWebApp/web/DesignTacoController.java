@@ -1,4 +1,4 @@
-package com.example.TacosWebApp.controllers;
+package com.example.TacosWebApp.web;
 
 import com.example.TacosWebApp.data.IngredientRepository;
 import com.example.TacosWebApp.data.TacoRepository;

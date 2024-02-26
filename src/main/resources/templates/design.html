@@ -89,6 +89,13 @@
             </form>
         </div>
 
+        <br>
+        <div class="container">
+            <form method="POST" th:action="@{/logout}">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+
         <script>
             function clearSelections() {
                 // Get all checkboxes and uncheck them
