@@ -43,7 +43,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/register", "/login").permitAll()
-                        .requestMatchers("/design", "/orders").hasRole("USER")
+                        .requestMatchers("/design", "/orders", "/orders/current").hasRole("USER")
                         .requestMatchers("/", "/**").permitAll()
 
                 );
@@ -68,7 +68,7 @@ public class SecurityConfig {
 //        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 //        auth.inMemoryAuthentication()
 //                .withUser("Kong")
-//                .password(bcrypt.encode("123456"))
+//                .password(bcrypt.encode("12345"))
 //                .roles("USER")
 //                .and()
 //                .passwordEncoder(bcrypt);

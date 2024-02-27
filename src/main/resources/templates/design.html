@@ -86,6 +86,9 @@
                 </div>
                 <br>
                 <a href="/" class="btn btn-primary">Go back</a>
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
             </form>
         </div>
 
