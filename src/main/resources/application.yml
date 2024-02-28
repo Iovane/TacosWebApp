@@ -1,7 +1,17 @@
+#spring:
+#  datasource:
+#    generate-unique-name: false
+#    name: tacocloud
+
 spring:
   datasource:
-    generate-unique-name: false
-    name: tacocloud
+    driver-class-name: org.postgresql.Driver
+    password: iovanevar16
+    url: jdbc:postgresql://localhost:8888/taco_cloud
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
 
 server:
   port: 9999
