@@ -5,13 +5,25 @@
 
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    password: iovanevar16
     url: jdbc:postgresql://localhost:8888/taco_cloud
     username: postgres
+    password: iovanevar16
   jpa:
     hibernate:
       ddl-auto: create
 
 server:
-  port: 9999
+  port: 8443
+  ssl:
+    key-store: mykeys.jks
+    key-store-password: letmein
+    key-password: letmein
+
+logging:
+  file:
+    path: /var/logs/
+    name: TacoCloud.log
+  level:
+    root: info
+    org:
+      springframework.security: WARN
