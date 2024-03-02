@@ -9,6 +9,7 @@ import com.example.TacosWebApp.entities.TacoOrder;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -48,12 +49,7 @@ public class DesignTacoController {
 
     @GetMapping
     public String showDesignForm(Model model) {
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredientRepo.findAll().forEach(ingredients::add);
-        Type[] types = Type.values();
-        for(Type type: types) {
-            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
-        }
+        locateViewWithIngredients(model);
 
         model.addAttribute("taco", new Taco());
         return "design";
@@ -61,8 +57,10 @@ public class DesignTacoController {
 
 
     @PostMapping
-    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder){
+    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder, Model model){
         if(errors.hasErrors()){
+            locateViewWithIngredients(model);
+
             return "design";
         }
 
@@ -79,6 +77,15 @@ public class DesignTacoController {
                 .stream()
                 .filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());
+    }
+
+    private void locateViewWithIngredients(Model model){
+        List<Ingredient> ingredients = new ArrayList<>(ingredientRepo.findAll());
+        Type[] types = Type.values();
+
+        for(Type type: types) {
+            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
+        }
     }
 
 }
