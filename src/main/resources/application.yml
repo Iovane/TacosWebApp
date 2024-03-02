@@ -1,7 +1,7 @@
-#spring:
-#  datasource:
-#    generate-unique-name: false
-#    name: tacocloud
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
 
 spring:
   datasource:
@@ -11,6 +11,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+
+#  security:
+#    user:
+#      name: admin
+#      password: admin
 
 server:
   port: 8443
@@ -25,5 +31,5 @@ logging:
     name: TacoCloud.log
   level:
     root: info
-    org:
-      springframework.security: WARN
+    org.springframework.security: WARN
+

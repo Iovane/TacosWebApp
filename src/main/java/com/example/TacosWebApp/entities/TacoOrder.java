@@ -24,6 +24,7 @@ public class TacoOrder implements Serializable {
     private Long id;
 
     @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id")
     private User user;
 
     private Date placedAt;
