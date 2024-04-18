@@ -6,6 +6,7 @@ import com.example.TacosWebApp.security.RegistrationForm;
 import com.example.TacosWebApp.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 @RequestMapping("/register")
 public class RegistrationController {
 
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(RegistrationController.class);
     private Logger logger = Logger.getLogger(getClass().getName());
 
     private UserService userService;
@@ -67,8 +69,6 @@ public class RegistrationController {
         }
 
         userService.save(userForm);
-
-        theSession.setAttribute("user", userForm);
 
         return "redirect:/login";
     }
