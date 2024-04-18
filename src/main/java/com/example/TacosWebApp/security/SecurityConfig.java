@@ -1,50 +1,50 @@
 package com.example.TacosWebApp.security;
 
-import com.example.TacosWebApp.data.UserRepository;
-import com.example.TacosWebApp.entities.User;
+import com.example.TacosWebApp.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepo) {
-        return username -> {
-            User user = userRepo.findByUsername(username);
-            if (user != null) return user;
+    public DaoAuthenticationProvider authenticationProvider(UserService userService ) {
 
-            throw new UsernameNotFoundException("User '" + username + "' not found");
-        };
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(userService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
     }
 
     @Bean
-    public SecurityFilterChain web(HttpSecurity http) throws Exception {
+    public SecurityFilterChain web(HttpSecurity http, AuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("/register", "/login").permitAll()
-//                        .requestMatchers("/design", "/orders", "/orders/current").hasRole("USER")
+                        .requestMatchers("/register", "/login").permitAll()
+                        .requestMatchers("/design", "/orders", "/orders/current").hasRole("USER")
                         .requestMatchers("/", "/**").permitAll()
+                        .anyRequest().authenticated()
 
-                );
-
-        http
+                )
                 .formLogin(form -> form
-                        .loginPage("/login").defaultSuccessUrl("/design", true)
-                );
+                        .loginPage("/login")
+                        .successHandler(customAuthenticationSuccessHandler)
+                        .permitAll());
 
 
         return http.build();

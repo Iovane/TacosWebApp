@@ -6,12 +6,12 @@ import com.example.TacosWebApp.entities.Ingredient;
 import com.example.TacosWebApp.entities.Ingredient.Type;
 import com.example.TacosWebApp.entities.Taco;
 import com.example.TacosWebApp.entities.TacoOrder;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -55,6 +56,19 @@ public class DesignTacoController {
         return "design";
     }
 
+    @GetMapping("/recent")
+    public String showRecentTacos(Model model) {
+        List<Taco> recentTacos = tacoRepo.findTop5ByOrderByCreatedAtDesc();
+        model.addAttribute("recentTacos", recentTacos);
+
+        return "recent";
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Taco> tacoById(@PathVariable("id") Long id) {
+        return tacoRepo.findById(id);
+    }
+
 
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder, Model model){
@@ -63,6 +77,10 @@ public class DesignTacoController {
 
             return "design";
         }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        taco.setCreatedBy(authentication.getName());
 
         Taco saved = tacoRepo.save(taco);
         tacoOrder.addDesign(saved);

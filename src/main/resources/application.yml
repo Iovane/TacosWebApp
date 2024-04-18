@@ -10,7 +10,9 @@ spring:
     password: iovanevar16
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+  main:
+    banner-mode: off
 
 
 #  security:
@@ -19,11 +21,11 @@ spring:
 #      password: admin
 
 server:
-  port: 8443
-  ssl:
-    key-store: mykeys.jks
-    key-store-password: letmein
-    key-password: letmein
+  port: 8080
+#  ssl:
+#    key-store: mykeys.jks
+#    key-store-password: letmein
+#    key-password: letmein
 
 logging:
   file:
@@ -32,4 +34,6 @@ logging:
   level:
     root: info
     org.springframework.security: WARN
+
+
 
