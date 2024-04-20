@@ -2,6 +2,7 @@ package com.example.TacosWebApp.web;
 
 import com.example.TacosWebApp.data.OrderRepository;
 import com.example.TacosWebApp.data.UserDao;
+import com.example.TacosWebApp.entities.Taco;
 import com.example.TacosWebApp.entities.TacoOrder;
 import com.example.TacosWebApp.entities.User;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -33,7 +35,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus, Principal principal){
+    public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus, Principal principal) {
         if (errors.hasErrors()){
             return "orderForm";
         }

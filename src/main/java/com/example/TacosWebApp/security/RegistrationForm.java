@@ -10,11 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class RegistrationForm {
 
     @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
+    @Size(min = 5, message = "should be at least 5 characters")
     private String username;
 
     @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
+    @Size(min = 7, message = "should be at least 7 characters")
     private String password;
 
     @NotNull(message = "is required")

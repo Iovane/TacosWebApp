@@ -17,10 +17,10 @@ import java.util.List;
 @Table(name = "Taco_Order")
 public class TacoOrder implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(targetEntity = User.class)
@@ -54,11 +54,18 @@ public class TacoOrder implements Serializable {
     @Digits(integer=3, fraction=0, message="Invalid CVV")
     private String ccCVV;
 
-    @OneToMany(targetEntity=Taco.class)
-    private List<Taco> tacos = new ArrayList<>();
+    @OneToMany(mappedBy = "tacoOrder",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Taco> tacos;
 
     public void addDesign(Taco design) {
-        this.tacos.add(design);
+        if (tacos == null) {
+            tacos = new ArrayList<>();
+        }
+        tacos.add(design);
+
+        design.setTacoOrder(this);
     }
 
     @PrePersist

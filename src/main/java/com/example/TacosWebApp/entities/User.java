@@ -53,16 +53,17 @@ public class User {
 
 
     public boolean isAdmin() {
-        boolean isAdmin = this.getRoles()
-                .stream()
-                .anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
+        boolean isAdmin = false;
 
-        if (isAdmin) {
-            log.info("User has ROLE_ADMIN role");
-            return true;
+        if (this.roles != null ) {
+
+            isAdmin = this.getRoles()
+                    .stream()
+                    .anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
+
         }
 
-        return false;
+        return isAdmin;
     }
 
 }

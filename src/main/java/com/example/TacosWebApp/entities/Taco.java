@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-import javax.print.attribute.standard.MediaSize;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class Taco {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -38,9 +37,23 @@ public class Taco {
     @Column(name = "created_by")
     private String createdBy;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "taco_order_id")
+    private TacoOrder tacoOrder;
+
     @PrePersist
     void createAt() {
         this.createdAt = new Date();
     }
 
+    @Override
+    public String toString() {
+        return "Taco{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", ingredients=" + ingredients +
+                ", createdAt=" + createdAt +
+                ", createdBy='" + createdBy + '\'' +
+                '}';
+    }
 }

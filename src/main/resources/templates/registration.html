@@ -14,41 +14,78 @@
 <div th:replace="~{fragments/navigation :: navigation}"></div>
 
 <div class="wrapper">
-    <form class="form-signin" method="POST" th:action="@{/register}" th:object="${userForm}">
+    <form class="form-signin form-inline" method="POST" th:action="@{/register}" th:object="${userForm}">
         <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
         <!--    <img src="/static/tacos.jpeg" class="mb-4" alt="Taco Cloud Logo" width="300" height="215">-->
 
-        <div th:if="${registrationError}" class="alert alert-danger mt-3">
+        <div th:if="${registrationError}" class="alert alert-danger mt-3" style="width: 300px;">
             <span th:text="${registrationError}"></span>
         </div>
 
-        <label for="username" class="visually-hidden">Username:</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
+        <div class="form-group">
+            <label for="username" class="visually-hidden">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" style="width: 300px;" required autofocus>
+            <div th:if="${#fields.hasErrors('username')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('username')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
 
-        <!--    <div th:if="${#fields.errors('username')}"-->
-        <!--         style="margin-bottom: 25px" class="text-danger">-->
-        <!--        <ul>-->
-        <!--            <li th:errors="${#fields.errors('userName')}" th:text="'User Name ' + ${err}" />-->
-        <!--        </ul>-->
-        <!--    </div>-->
-
-        <label for="password" class="visually-hidden">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+        <div class="form-group">
+            <label for="password" class="visually-hidden">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" style="width: 300px;" required>
+            <div th:if="${#fields.hasErrors('password')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
 
         <label for="confirm" class="visually-hidden">Confirm password:</label>
-        <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Confirm password" required>
+        <input type="password" class="form-control" id="confirm" name="confirm" placeholder="Confirm Password" style="width: 300px;" required>
 
-        <label for="fullName" class="visually-hidden">Full name:</label>
-        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full name" required>
+        <div class="form-group">
+            <label for="fullName" class="visually-hidden">Password:</label>
+            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" style="width: 300px;" required>
+            <div th:if="${#fields.hasErrors('fullName')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('fullName')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
 
-        <label for="city" class="visually-hidden">City:</label>
-        <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
+        <div class="form-group">
+            <label for="city" class="visually-hidden">Password:</label>
+            <input type="text" class="form-control" id="city" name="city" placeholder="City" style="width: 300px;" required>
+            <div th:if="${#fields.hasErrors('city')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('city')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
 
-        <label for="zip" class="visually-hidden">Zip:</label>
-        <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip" required>
+        <div class="form-group">
+            <label for="zip" class="visually-hidden">Username:</label>
+            <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip Code" style="width: 300px;" required autofocus>
+            <div th:if="${#fields.hasErrors('zip')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('zip')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
 
-        <label for="phone" class="visually-hidden">Phone:</label>
-        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+
+        <div class="form-group">
+            <label for="phone" class="visually-hidden">Username:</label>
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" style="width: 300px;" required autofocus>
+            <div th:if="${#fields.hasErrors('phone')}" class="text-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('phone')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
+
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
     </form>

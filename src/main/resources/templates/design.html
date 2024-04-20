@@ -1,107 +1,293 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--    <title>Taco Cloud</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">-->
+<!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link th:href="@{/css/styles.css}" rel="stylesheet">-->
+<!--    <style>-->
+<!--        .ingredient-image {-->
+<!--            max-width: 50px;-->
+<!--            max-height: 50px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<div th:replace="~{fragments/navigation :: navigation}"></div>-->
+
+<!--<div class="container">-->
+<!--    <h1 class="mt-3">Design your taco!</h1>-->
+<!--    <img class="img-fluid mt-3" th:src="@{/tacos.jpeg}" alt="Tacos Image"/>-->
+<!--    <form class="mt-3" method="POST" th:object="${taco}">-->
+<!--        <div class="row">-->
+<!--            -->
+<!--            <div class="col-md-6">-->
+<!--                <div class="ingredient-group">-->
+<!--                    <h3>Designate your wrap:</h3>-->
+<!--                    <div th:each="ingredient : ${wrap}" class="form-check">-->
+<!--                        <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">-->
+<!--                        <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>-->
+<!--&lt;!&ndash;                        <img class="ingredient-image" th:src="${}" alt="Ingredient Image">&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="ingredient-group mt-3">-->
+<!--                    <h3>Pick your protein:</h3>-->
+<!--                    <div th:each="ingredient : ${protein}" class="form-check">-->
+<!--                        <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">-->
+<!--                        <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="ingredient-group mt-3">-->
+<!--                    <h3>Choose your veggies:</h3>-->
+<!--                    <div th:each="ingredient : ${veggies}" class="form-check">-->
+<!--                        <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">-->
+<!--                        <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="col-md-6">-->
+<!--                <div class="ingredient-group">-->
+<!--                    <h3>Determine your cheese:</h3>-->
+<!--                    <div th:each="ingredient : ${cheese}" class="form-check">-->
+<!--                        <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">-->
+<!--                        <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="ingredient-group mt-3">-->
+<!--                    <h3>Select your sauce:</h3>-->
+<!--                    <div th:each="ingredient : ${sauce}" class="form-check">-->
+<!--                        <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">-->
+<!--                        <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="ingredient-group mt-3">-->
+<!--                    <h3>Select your citron:</h3>-->
+<!--                    <div th:each="ingredient : ${citron}" class="form-check">-->
+<!--                        <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">-->
+<!--                        <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('ingredients')}">-->
+<!--                <strong>Error:</strong>-->
+<!--                <span th:each="error : ${#fields.errors('ingredients')}" th:text="${error}">Ingredients Error</span>-->
+<!--            </div>-->
+
+<!--            <div class="col-md-12">-->
+<!--                <button class="btn btn-danger mt-3" type="button" onclick="clearSelections()">Clear Selections</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="mt-3">-->
+<!--            <h3>Name your taco creation:</h3>-->
+<!--            <input type="text" class="form-control" th:field="*{name}">-->
+
+<!--            <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('name')}">-->
+<!--                <strong>Error:</strong>-->
+<!--                <span th:errors="*{name}">Name Error</span>-->
+<!--            </div>-->
+
+<!--            <button class="btn btn-primary mt-3">Submit Your Taco</button>-->
+<!--        </div>-->
+<!--        <br>-->
+<!--        <a href="/" class="btn btn-primary">Home</a>-->
+
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+
+<!--    </form>-->
+<!--</div>-->
+
+<!--<br>-->
+
+<!--<div th:replace="~{fragments/footer :: footer}"></div>-->
+<!--<script th:src="@{/scripts/bootstrap.js}"></script>-->
+<!--<script th:src="@{/scripts/clearSelections.js}"></script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Taco Cloud</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <style>
+        .card:hover {
+            background-color: #f8f9fa; /* Change to your desired hover background color */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+
+        .centered-checkbox {
+            display: block;
+            margin-left: 47.5px;
+            width: 50px;
+
+        }
+
+        .centered-title {
+            text-align: center;
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <div th:replace="~{fragments/navigation :: navigation}"></div>
+<div th:replace="~{fragments/navigation :: navigation}"></div>
 
-    <div class="container">
-        <h1 class="mt-3">Design your taco!</h1>
-        <img class="img-fluid mt-3" th:src="@{/tacos.jpeg}" alt="Tacos Image"/>
-        <form class="mt-3" method="POST" th:object="${taco}">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="ingredient-group">
-                        <h3>Designate your wrap:</h3>
-                        <div th:each="ingredient : ${wrap}" class="form-check">
-                            <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">
-                            <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
-                        </div>
-                    </div>
+<div class="container">
+    <h1 class="mt-3">Design your taco!</h1>
+    <img class="img-fluid mt-3" th:src="@{/tacos.jpeg}" alt="Tacos Image"/>
+    <form class="mt-3" method="POST" th:object="${taco}">
+        <div class="row">
 
-                    <div class="ingredient-group mt-3">
-                        <h3>Pick your protein:</h3>
-                        <div th:each="ingredient : ${protein}" class="form-check">
-                            <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">
-                            <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
-                        </div>
-                    </div>
-
-                    <div class="ingredient-group mt-3">
-                        <h3>Choose your veggies:</h3>
-                        <div th:each="ingredient : ${veggies}" class="form-check">
-                            <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">
-                            <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
-                        </div>
+            <div class="col-md-6">
+                <h3>Designate Your Wrap:</h3>
+                <div class="row">
+                    <div th:each="ingredient : ${wrap}" class="col-md-4 mb-4">
+                        <label class="form-check-label" th:for="'checkbox-' + ${ingredient.id}">
+                            <div class="card h-100 d-flex flex-column justify-content-center align-items-center ingredient-card" style="width: 188px;">
+                                <img class="card-img-top" th:src="${ingredient.imageUrl}" alt="Ingredient Image">
+                                <div class="card-body">
+                                    <h5 class="card-title centered-title" style="width: 145px" th:text="${ingredient.name}">INGREDIENT</h5>
+                                    <input class="form-check-input centered-checkbox" type="checkbox" th:id="'checkbox-' + ${ingredient.id}" th:field="*{ingredients}" th:value="${ingredient.id}">
+                                    <br>
+                                </div>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="ingredient-group">
-                        <h3>Determine your cheese:</h3>
-                        <div th:each="ingredient : ${cheese}" class="form-check">
-                            <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">
-                            <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
-                        </div>
-                    </div>
-
-                    <div class="ingredient-group mt-3">
-                        <h3>Select your sauce:</h3>
-                        <div th:each="ingredient : ${sauce}" class="form-check">
-                            <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">
-                            <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
-                        </div>
-                    </div>
-
-                    <div class="ingredient-group mt-3">
-                        <h3>Select your citron:</h3>
-                        <div th:each="ingredient : ${citron}" class="form-check">
-                            <input class="form-check-input" th:field="*{ingredients}" type="checkbox" th:value="${ingredient.id}">
-                            <label class="form-check-label" th:text="${ingredient.name}">INGREDIENT</label>
-                        </div>
+                <h3>Pick Your Protein:</h3>
+                <div class="row">
+                    <div th:each="ingredient : ${protein}" class="col-md-4 mb-4">
+                        <label class="form-check-label" th:for="'checkbox-' + ${ingredient.id}">
+                            <div class="card h-100 d-flex flex-column justify-content-center align-items-center ingredient-card" style="width: 188px;">
+                                <img class="card-img-top" th:src="${ingredient.imageUrl}" alt="Ingredient Image">
+                                <div class="card-body">
+                                    <h5 class="card-title centered-title" style="width: 145px" th:text="${ingredient.name}">INGREDIENT</h5>
+                                    <input class="form-check-input centered-checkbox" type="checkbox" th:id="'checkbox-' + ${ingredient.id}" th:field="*{ingredients}" th:value="${ingredient.id}">
+                                    <br>
+                                </div>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
-                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('ingredients')}">
-                    <strong>Error:</strong>
-                        <span th:each="error : ${#fields.errors('ingredients')}" th:text="${error}">Ingredients Error</span>
-                </div>
-
-                <div class="col-md-12">
-                    <button class="btn btn-danger mt-3" type="button" onclick="clearSelections()">Clear Selections</button>
+                <h3>Choose Your Veggies:</h3>
+                <div class="row">
+                    <div th:each="ingredient : ${veggies}" class="col-md-4 mb-4">
+                        <label class="form-check-label" th:for="'checkbox-' + ${ingredient.id}">
+                            <div class="card h-100 d-flex flex-column justify-content-center align-items-center ingredient-card" style="width: 188px;">
+                                <img class="card-img-top" th:src="${ingredient.imageUrl}" alt="Ingredient Image">
+                                <div class="card-body">
+                                    <h5 class="card-title centered-title" style="width: 145px" th:text="${ingredient.name}">INGREDIENT</h5>
+                                    <input class="form-check-input centered-checkbox" type="checkbox" th:id="'checkbox-' + ${ingredient.id}" th:field="*{ingredients}" th:value="${ingredient.id}">
+                                    <br>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-3">
-                <h3>Name your taco creation:</h3>
-                <input type="text" class="form-control" th:field="*{name}">
-
-                <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('name')}">
-                    <strong>Error:</strong>
-                    <span th:errors="*{name}">Name Error</span>
+            <div class="col-md-6">
+                <h3>Determine Your Cheese:</h3>
+                <div class="row">
+                    <div th:each="ingredient : ${cheese}" class="col-md-4 mb-4">
+                        <label class="form-check-label" th:for="'checkbox-' + ${ingredient.id}">
+                            <div class="card h-100 d-flex flex-column justify-content-center align-items-center ingredient-card" style="width: 188px;">
+                                <img class="card-img-top" th:src="${ingredient.imageUrl}" alt="Ingredient Image">
+                                <div class="card-body">
+                                    <h5 class="card-title centered-title" style="width: 145px" th:text="${ingredient.name}">INGREDIENT</h5>
+                                    <input class="form-check-input centered-checkbox" type="checkbox" th:id="'checkbox-' + ${ingredient.id}" th:field="*{ingredients}" th:value="${ingredient.id}">
+                                    <br>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
 
-                <button class="btn btn-primary mt-3">Submit Your Taco</button>
+                <h3>Select Your Sauce:</h3>
+                <div class="row">
+                    <div th:each="ingredient : ${sauce}" class="col-md-4 mb-4">
+                        <label class="form-check-label" th:for="'checkbox-' + ${ingredient.id}">
+                            <div class="card h-100 d-flex flex-column justify-content-center align-items-center ingredient-card" style="width: 188px;">
+                                <img class="card-img-top" th:src="${ingredient.imageUrl}" alt="Ingredient Image">
+                                <div class="card-body">
+                                    <h5 class="card-title centered-title" style="width: 145px" th:text="${ingredient.name}">INGREDIENT</h5>
+                                    <input class="form-check-input centered-checkbox" type="checkbox" th:id="'checkbox-' + ${ingredient.id}" th:field="*{ingredients}" th:value="${ingredient.id}">
+                                    <br>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <h3>Choose Your Citron:</h3>
+                <div class="row">
+                    <div th:each="ingredient : ${citron}" class="col-md-4 mb-4">
+                        <label class="form-check-label" th:for="'checkbox-' + ${ingredient.id}">
+                            <div class="card h-100 d-flex flex-column justify-content-center align-items-center ingredient-card" style="width: 188px;">
+                                <img class="card-img-top" th:src="${ingredient.imageUrl}" alt="Ingredient Image">
+                                <div class="card-body">
+                                    <h5 class="card-title centered-title" style="width: 145px" th:text="${ingredient.name}">INGREDIENT</h5>
+                                    <input class="form-check-input centered-checkbox" type="checkbox" th:id="'checkbox-' + ${ingredient.id}" th:field="*{ingredients}" th:value="${ingredient.id}">
+                                    <br>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <br>
-            <a href="/" class="btn btn-primary">Home</a>
+        </div>
 
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('ingredients')}">
+            <strong>Error:</strong>
+            <span th:each="error : ${#fields.errors('ingredients')}" th:text="${error}">Ingredients Error</span>
+        </div>
 
-        </form>
-    </div>
+        <div>
+            <button class="btn btn-danger mt-3" type="button" onclick="clearSelections()">Clear Selections</button>
+        </div>
 
-    <br>
+        <div class="mt-3">
+            <h3>Name your taco creation:</h3>
+            <input type="text" class="form-control" th:field="*{name}">
 
-    <div th:replace="~{fragments/footer :: footer}"></div>
-    <script th:src="@{/scripts/bootstrap.js}"></script>
-    <script th:src="@{/scripts/clearSelections.js}"></script>
+            <div class="alert alert-danger mt-3" th:if="${#fields.hasErrors('name')}">
+                <strong>Error:</strong>
+                <span th:errors="*{name}">Name Error</span>
+            </div>
+
+            <button class="btn btn-primary mt-3">Submit Your Taco</button>
+        </div>
+        <br>
+        <a href="/" class="btn btn-primary">Home</a>
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+    </form>
+</div>
+
+<br>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script th:src="@{/scripts/bootstrap.js}"></script>
+<script th:src="@{/scripts/clearSelections.js}"></script>
 
 </body>
 </html>

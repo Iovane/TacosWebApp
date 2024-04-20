@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -47,21 +50,15 @@ public class DesignTacoController {
         return new Taco();
     }
 
-
     @GetMapping
     public String showDesignForm(Model model) {
         locateViewWithIngredients(model);
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info(auth.getName());
+
         model.addAttribute("taco", new Taco());
         return "design";
-    }
-
-    @GetMapping("/recent")
-    public String showRecentTacos(Model model) {
-        List<Taco> recentTacos = tacoRepo.findTop5ByOrderByCreatedAtDesc();
-        model.addAttribute("recentTacos", recentTacos);
-
-        return "recent";
     }
 
     @GetMapping("/{id}")
@@ -71,19 +68,16 @@ public class DesignTacoController {
 
 
     @PostMapping
-    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder, Model model){
+    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder, Model model, Principal principal){
         if(errors.hasErrors()){
             locateViewWithIngredients(model);
 
             return "design";
         }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        taco.setCreatedBy(principal.getName());
 
-        taco.setCreatedBy(authentication.getName());
-
-        Taco saved = tacoRepo.save(taco);
-        tacoOrder.addDesign(saved);
+        tacoOrder.addDesign(taco);
 
         log.info("Processing taco: " + taco);
 
