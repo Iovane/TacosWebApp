@@ -13,6 +13,11 @@
 <div th:replace="~{fragments/navigation :: navigation}"></div>
 
 <div class="container">
+
+    <div th:if="${param.logout}" class="alert alert-success text-center mt-3">
+        You have been logged out successfully.
+    </div>
+
     <h1 class="h3 mb-3 fw-normal">Login</h1>
     <img src="/tacos.jpeg" class="mb-4" alt="Tacos Image">
     <div th:if="${param.error}" class="alert alert-danger mt-3">

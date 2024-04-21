@@ -24,14 +24,14 @@
                         <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true" th:if="${session.user}" th:text="${session.user.username}"></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/design}">Order Tacos</a></li>
-                            <li><a class="dropdown-item" href="#" th:if="${session.user.isAdmin()}">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+<!--                            <li><a class="dropdown-item" href="#" th:if="${session.user.isAdmin()}">Another action</a></li>-->
+<!--                            <li><hr class="dropdown-divider"></li>-->
+<!--                            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
                         </ul>
                     </li>
                 </ul>
                 <a class="nav-link active"></a>
-                <form action="#" th:action="@{/logout}" method="POST">
+                <form action="#" th:action="@{/custom-logout}" method="POST">
                     <a>
                         <input type="submit" value="Logout" class="btn btn-outline-danger" />
                     </a>
