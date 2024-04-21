@@ -10,5 +10,5 @@ public interface TacoService {
 
     List<Taco> findTop5Tacos();
 
-    Taco findTacoById(Long theId);
+    Taco findById(Long id);
 }

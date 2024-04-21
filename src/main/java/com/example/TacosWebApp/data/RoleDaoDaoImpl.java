@@ -2,7 +2,6 @@ package com.example.TacosWebApp.data;
 
 import com.example.TacosWebApp.entities.Role;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 import lombok.Data;

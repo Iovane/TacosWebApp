@@ -20,13 +20,12 @@ public class TacoServiceImpl implements TacoService{
     }
 
     @Override
-    public Taco findTacoById(Long theId) {
-        Optional<Taco> tacoOptional = tacoRepo.findById(theId);
+    public Taco findById(Long id) {
+        Optional<Taco> tempTaco = tacoRepo.findById(id);
 
         Taco theTaco;
-
-        if(tacoOptional.isPresent()) {
-            theTaco = tacoOptional.get();
+        if(tempTaco.isPresent()) {
+            theTaco = tempTaco.get();
         } else {
             throw new RuntimeException("Taco not found");
         }
@@ -46,7 +45,6 @@ public class TacoServiceImpl implements TacoService{
         optionalTaco.ifPresent(taco -> {
             TacoOrder tacoOrder = taco.getTacoOrder();
             tacoRepo.delete(taco);
-            System.out.println(tacoOrder);
 
             if (tacoOrder != null && tacoOrder.getTacos().isEmpty()) {
                 orderService.delete(tacoOrder);

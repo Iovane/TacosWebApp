@@ -3,7 +3,6 @@ package com.example.TacosWebApp.web;
 import com.example.TacosWebApp.entities.User;
 import com.example.TacosWebApp.security.RegistrationForm;
 import com.example.TacosWebApp.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +50,7 @@ public class RegistrationController {
         }
 
         // check the database if user already exists
-        User existing = userService.findByUserName(userName);
+        User existing = userService.findByUsername(userName);
         if (existing != null){
             theModel.addAttribute("userForm", new RegistrationForm());
             theModel.addAttribute("registrationError", "Username already exists.");

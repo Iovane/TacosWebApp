@@ -1,19 +1,20 @@
 package com.example.TacosWebApp.web;
 
-import com.example.TacosWebApp.data.OrderRepository;
-import com.example.TacosWebApp.data.UserDao;
-import com.example.TacosWebApp.entities.Taco;
 import com.example.TacosWebApp.entities.TacoOrder;
 import com.example.TacosWebApp.entities.User;
+import com.example.TacosWebApp.service.OrderService;
+import com.example.TacosWebApp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import java.security.Principal;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -21,12 +22,12 @@ import java.util.List;
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
-    private final UserDao userDao;
-    private final OrderRepository orderRepo;
+    private final UserService userService;
+    private final OrderService orderService;
 
-    public OrderController(OrderRepository orderRepo, UserDao userDao) {
-        this.orderRepo = orderRepo;
-        this.userDao = userDao;
+    public OrderController(OrderService orderService, UserService userService) {
+        this.orderService = orderService;
+        this.userService = userService;
     }
 
     @GetMapping("/current")
@@ -41,11 +42,11 @@ public class OrderController {
         }
 
         String username = principal.getName();
-        User user = userDao.findByUsername(username);
+        User user = userService.findByUsername(username);
 
         order.setUser(user);
 
-        orderRepo.save(order);
+        orderService.save(order);
         sessionStatus.setComplete();
 
         log.info("Processing order: {}", order);

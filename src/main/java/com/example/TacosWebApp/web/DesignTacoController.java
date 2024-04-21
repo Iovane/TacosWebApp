@@ -1,16 +1,14 @@
 package com.example.TacosWebApp.web;
 
-import com.example.TacosWebApp.data.IngredientRepository;
-import com.example.TacosWebApp.data.TacoRepository;
 import com.example.TacosWebApp.entities.Ingredient;
 import com.example.TacosWebApp.entities.Ingredient.Type;
 import com.example.TacosWebApp.entities.Taco;
 import com.example.TacosWebApp.entities.TacoOrder;
-import jakarta.servlet.http.HttpSession;
+import com.example.TacosWebApp.service.IngredientService;
+import com.example.TacosWebApp.service.TacoService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,13 +27,13 @@ import java.util.stream.Collectors;
 @SessionAttributes("tacoOrder")
 public class DesignTacoController {
 
-    private final IngredientRepository ingredientRepo;
-    private final TacoRepository tacoRepo;
+    private final IngredientService ingredientService;
+    private final TacoService tacoService;
 
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo) {
-        this.ingredientRepo = ingredientRepo;
-        this.tacoRepo = tacoRepo;
+    public DesignTacoController(IngredientService ingredientService, TacoService tacoService) {
+        this.ingredientService = ingredientService;
+        this.tacoService = tacoService;
     }
 
     @ModelAttribute(name = "tacoOrder")
@@ -61,10 +57,10 @@ public class DesignTacoController {
         return "design";
     }
 
-    @GetMapping("/{id}")
-    public Optional<Taco> tacoById(@PathVariable("id") Long id) {
-        return tacoRepo.findById(id);
-    }
+//    @GetMapping("/{id}")
+//    public Taco tacoById(@PathVariable("id") Long id) {
+//        return tacoService.findById(id);
+//    }
 
 
     @PostMapping
@@ -92,7 +88,7 @@ public class DesignTacoController {
     }
 
     private void locateViewWithIngredients(Model model){
-        List<Ingredient> ingredients = new ArrayList<>(ingredientRepo.findAll());
+        List<Ingredient> ingredients = new ArrayList<>(ingredientService.findAll());
         Type[] types = Type.values();
 
         for(Type type: types) {

@@ -15,6 +15,11 @@ public class OrderServiceImp implements OrderService {
     }
 
     @Override
+    public void save(TacoOrder order) {
+        orderRepo.save(order);
+    }
+
+    @Override
     @Transactional
     public void delete(TacoOrder tacoOrder) {
         orderRepo.delete(tacoOrder);
